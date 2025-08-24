@@ -92,43 +92,48 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
   });
 });
 
-const contactForm = document.querySelector(".contact-form");
-const feedbackEl = document.getElementById("responseMessage");
+document.addEventListener("DOMContentLoaded", () => {
+  const contactForm = document.querySelector(".contact-form");
+  const feedbackEl = document.getElementById("responseMessage");
 
-contactForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  const formData = new FormData(contactForm);
-  const apiBase = "https://travel-n-tour-api.onrender.com"; // backend URL
+      const formData = new FormData(contactForm);
+      const apiBase = "https://travel-n-tour-api.onrender.com"; // backend URL
 
-  feedbackEl.innerText = "⏳ Sending message...";
-  feedbackEl.style.color = "#1976d2";
+      feedbackEl.innerText = "⏳ Sending message...";
+      feedbackEl.style.color = "#1976d2";
 
-  try {
-    const response = await fetch(`${apiBase}/send-contact`, {
-      method: "POST",
-      body: formData, // ✅ ensure POST body is sent
+      try {
+        const response = await fetch(`${apiBase}/send-contact`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server returned status ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("📨 API Response:", result); // 👀 Debug
+
+        if (result.status === "success") {
+          feedbackEl.innerText =
+            "✅ Your message has been successfully received. Our team will contact you shortly.";
+          feedbackEl.style.color = "#0a7d0a";
+          contactForm.reset();
+        } else {
+          feedbackEl.innerText = "❌ " + result.message;
+          feedbackEl.style.color = "#d32f2f";
+        }
+      } catch (error) {
+        feedbackEl.innerText =
+          "⚠️ Something went wrong while sending your message. Please try again later.";
+        feedbackEl.style.color = "#ff9800";
+        console.error(error);
+      }
     });
-
-    if (!response.ok) {
-      throw new Error(`Server returned status ${response.status}`);
-    }
-
-    const result = await response.json();
-
-    if (result.status === "success") {
-      feedbackEl.innerText =
-        "✅ Your message has been successfully received. Our team will contact you shortly.";
-      feedbackEl.style.color = "#0a7d0a";
-      contactForm.reset();
-    } else {
-      feedbackEl.innerText = "❌ " + result.message;
-      feedbackEl.style.color = "#d32f2f";
-    }
-  } catch (error) {
-    feedbackEl.innerText =
-      "⚠️ Something went wrong while sending your message. Please try again later.";
-    feedbackEl.style.color = "#ff9800";
-    console.error(error);
   }
 });
