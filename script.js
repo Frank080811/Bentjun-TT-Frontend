@@ -92,18 +92,42 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
   });
 });
 
-const contactResponse = await fetch(`${apiBase}/send-contact`, {
-  method: "POST",
-  body: formData
-});
+// Contact form submission with API
+const contactForm = document.getElementById("contactForm");
 
-const contactResult = await contactResponse.json();
+if (contactForm) {
+  contactForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-if (contactResult.status === "success") {
-  document.getElementById("responseMessage").innerText =
-    "✅ Message sent successfully! We'll contact you soon.";
-  contactForm.reset();
-} else {
-  document.getElementById("responseMessage").innerText =
-    "❌ Error: " + contactResult.message;
+    const formData = new FormData();
+    formData.append("name", document.getElementById("name").value);
+    formData.append("email", document.getElementById("email").value);
+    formData.append("phone", document.getElementById("phone").value);
+    formData.append("message", document.getElementById("message").value);
+
+    const apiBase = "https://travel-n-tour-api.onrender.com";
+
+    try {
+      // Send contact details + auto acknowledgment in one request
+      const contactResponse = await fetch(`${apiBase}/send-contact`, {
+        method: "POST",
+        body: formData
+      });
+
+      const contactResult = await contactResponse.json();
+
+      if (contactResult.status === "success") {
+        document.getElementById("responseMessage").innerText =
+          "✅ Message sent successfully! We'll contact you soon.";
+        contactForm.reset();
+      } else {
+        document.getElementById("responseMessage").innerText =
+          "❌ Error: " + contactResult.message;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      document.getElementById("responseMessage").innerText =
+        "⚠️ Something went wrong. Please try again later.";
+    }
+  });
 }
