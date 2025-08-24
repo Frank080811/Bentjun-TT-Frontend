@@ -474,13 +474,21 @@ body {
 }
 
 .team-member {
-  background: #fff;
+  background: #0a3d62; /* Dark blue background */
+  color: #ffffff;       /* White text for contrast */
   padding: 25px;
   border-radius: 12px;
   width: 280px;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* slightly darker shadow for contrast */
 }
+
+/* Optional: hover effect */
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
 
 .team-member:hover {
   transform: translateY(-10px);
@@ -641,18 +649,24 @@ body {
 }
 
 .promo-card {
-  background: #fff;
-  color: #003366;
+  background: #0a3d62; /* Dark blue background */
+  color: #ffffff;       /* White text for visibility */
   padding: 25px;
   border-radius: 12px;
   min-width: 300px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* darker shadow for contrast */
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .promo-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.promo-card h3,
+.promo-card span,
+.promo-card i {
+  color: #ffffff;
 }
 
 /* Card headings */
