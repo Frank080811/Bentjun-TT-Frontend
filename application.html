@@ -12,8 +12,8 @@
   <!-- Top Navbar -->
   <header class="top-nav">
     <div class="logo">
-  <img src="images/logo.png" alt="Toureigo Logo">
-	</div>
+      <img src="images/logo.png" alt="Toureigo Logo">
+    </div>
     <nav>
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
@@ -32,196 +32,139 @@
   </header>
 
   <!-- Hero Section -->
-<section class="hero" id="hero">
-  <!-- Background Video -->
-  <video autoplay muted loop playsinline class="hero-video">
-    <source src="Videos/INTRO.mp4" type="video/mp4">
-    Your browser does not support HTML5 video.
-  </video>
-
-  <!-- Dark overlay -->
-  <div class="overlay"></div>
-
-  <!-- Hero content -->
-  <div class="hero-content">
-    <h1>Explore Work & Study Programs <span>Overseas</span></h1>
-    <p>Enjoy Your Life with BentJun</p>
-    <a href="#" class="btn-primary">More Packages</a>
-
-    <!-- Search Form -->
-    <div class="search-box">
-      <select>
-        <option>Choose Destination</option>
-        <option>Europe</option>
-        <option>UK</option>
-        <option>Canada</option>
-      </select>
-      <input type="date">
-      <select>
-        <option>Travel Type</option>
-        <option>Adventure</option>
-        <option>Luxury</option>
-        <option>Family</option>
-      </select>
-      <button class="btn-search">Search</button>
+  <section class="hero" id="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="Videos/INTRO.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Explore Work & Study Programs <span>Overseas</span></h1>
+      <p>Enjoy Your Life with BentJun</p>
+      <a href="#" class="btn-primary">More Packages</a>
+      <div class="search-box">
+        <select>
+          <option>Choose Destination</option>
+          <option>Europe</option>
+          <option>UK</option>
+          <option>Canada</option>
+        </select>
+        <input type="date">
+        <select>
+          <option>Travel Type</option>
+          <option>Adventure</option>
+          <option>Luxury</option>
+          <option>Family</option>
+        </select>
+        <button class="btn-search">Search</button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- Visa Application Form -->
+  <section id="visa-application">
+    <h2>Visa Application Form</h2>
 
-<section id="visa-application">
-  <h2>Visa Application Form</h2>
-  
-  <!-- Progress Bar -->
-  <div class="progress-bar">
-    <div class="progress" id="progress"></div>
-    <div class="step active">1</div>
-    <div class="step">2</div>
-    <div class="step">3</div>
-    <div class="step">4</div>
-  </div>
-
-  <form id="visaForm" class="visa-form">
-    <!-- Step 1: Personal Info -->
-    <div class="form-step active">
-      <label>Full Name</label>
-      <input type="text" required>
-      <label>Email</label>
-      <input type="email" required>
-      <label>Phone</label>
-      <input type="tel" required>
-      <button type="button" class="next-btn">Next</button>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+      <div class="step active">1</div>
+      <div class="step">2</div>
+      <div class="step">3</div>
+      <div class="step">4</div>
     </div>
 
-    <!-- Step 2: Travel Info -->
-    <div class="form-step">
-      <label>Destination Country</label>
-      <input type="text" required>
-      <label>Travel Date</label>
-      <input type="date" required>
-      <label>Return Date</label>
-      <input type="date">
-      <div class="form-nav">
-        <button type="button" class="prev-btn">Back</button>
+    <!-- Feedback element -->
+    <p id="visaResponseMessage" style="font-weight:bold; margin-top:10px;"></p>
+
+    <form id="visaForm" class="visa-form">
+      <!-- Step 1 -->
+      <div class="form-step active">
+        <label>Full Name</label>
+        <input type="text" name="fullName" required>
+        <label>Email</label>
+        <input type="email" name="email" required>
+        <label>Phone</label>
+        <input type="tel" name="phone" required>
         <button type="button" class="next-btn">Next</button>
       </div>
-    </div>
 
-    <!-- Step 3: Upload Docs -->
-    <div class="form-step">
-      <p id="document-info">
-        📌 Required Documents: Passport, Photo, Travel Itinerary
-      </p>
-      <label>Upload Passport</label>
-      <input type="file" required>
-      <label>Upload Photo</label>
-      <input type="file" required>
-      <div class="form-nav">
-        <button type="button" class="prev-btn">Back</button>
-        <button type="button" class="next-btn">Next</button>
+      <!-- Step 2 -->
+      <div class="form-step">
+        <label>Destination Country</label>
+        <input type="text" name="destination" required>
+        <label>Travel Date</label>
+        <input type="date" name="travelDate" required>
+        <label>Return Date</label>
+        <input type="date" name="returnDate">
+        <div class="form-nav">
+          <button type="button" class="prev-btn">Back</button>
+          <button type="button" class="next-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-step">
+        <p id="document-info">📌 Required Documents: Passport, Photo, Travel Itinerary</p>
+        <label>Upload Passport</label>
+        <input type="file" name="passport" required>
+        <label>Upload Photo</label>
+        <input type="file" name="photo" required>
+        <div class="form-nav">
+          <button type="button" class="prev-btn">Back</button>
+          <button type="button" class="next-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="form-step">
+        <h3>Review your details</h3>
+        <p>✔ Ensure all information is correct before submission.</p>
+        <div class="form-nav">
+          <button type="button" class="prev-btn">Back</button>
+          <button type="submit" class="btn-submit">Submit Application</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>BentJun Hub</h3>
+        <p>Providing unforgettable travel experiences across Europe and beyond. Plan your journey with us today!</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#activities">Activities</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#promo-offers">Packages</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <p><i class="fas fa-map-marker-alt"></i> Germany – Berlin / Ghana – Accra</p>
+        <p><i class="fas fa-phone-alt"></i> +49 157 3985 2461 / +49 152 1687 1042</p>
+        <p><i class="fas fa-envelope"></i> info@bentjun.com</p>
+      </div>
+      <div class="footer-social">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
       </div>
     </div>
-
-    <!-- Step 4: Review & Submit -->
-    <div class="form-step">
-      <h3>Review your details</h3>
-      <p>✔ Ensure all information is correct before submission.</p>
-      <div class="form-nav">
-        <button type="button" class="prev-btn">Back</button>
-        <button type="submit" class="btn-submit">Submit Application</button>
-      </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 BentJun Hub. All Rights Reserved.</p>
     </div>
-  </form>
-</section>
-
-<!-- Footer Section -->
-<footer class="site-footer">
-  <div class="footer-container">
-    <!-- About -->
-    <div class="footer-about">
-      <h3>BentJun Hub</h3>
-      <p>Providing unforgettable travel experiences across Europe and beyond. Plan your journey with us today!</p>
-    </div>
-
-    <!-- Quick Links -->
-    <div class="footer-links">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#activities">Activities</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#promo-offers">Packages</a></li>
-        <li><a href="#team">Team</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-
-    <!-- Contact Info -->
-    <div class="footer-contact">
-      <h4>Contact Us</h4>
-      <p><i class="fas fa-map-marker-alt"></i> Germany – Berlin / Ghana – Accra</p>
-      <p><i class="fas fa-phone-alt"></i> +49 157 3985 2461 / +49 152 1687 1042</p>
-      <p><i class="fas fa-envelope"></i> info@bentjun.com</p>
-    </div>
-
-    <!-- Social Media -->
-    <div class="footer-social">
-      <h4>Follow Us</h4>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/profile.php?id=61579748973349"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://x.com/BentjunT"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/bentjuntravelandtour"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; 2025 BentJun Hub. All Rights Reserved.</p>
-  </div>
-</footer>
-
+  </footer>
 
 </body>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const categorySelect = document.getElementById("application-category");
-    const documentInfo = document.getElementById("document-info");
-    const documentList = document.getElementById("document-list");
-
-    const requirements = {
-      tourist: [
-        "Valid Passport",
-        "Recent Passport-sized Photograph",
-        "Travel Itinerary",
-        "Bank Statement (last 3 months)"
-      ],
-      work: [
-        "Valid Passport",
-        "Employment Contract",
-        "Educational Certificates",
-        "Work Experience Letters"
-      ],
-      study: [
-        "Valid Passport",
-        "University Admission Letter",
-        "Academic Transcripts",
-        "Proof of Financial Support"
-      ]
-    };
-
-    categorySelect.addEventListener("change", () => {
-      const value = categorySelect.value;
-      if (requirements[value]) {
-        documentInfo.classList.remove("hidden");
-        documentList.innerHTML = requirements[value].map(item => `<li>${item}</li>`).join("");
-      } else {
-        documentInfo.classList.add("hidden");
-        documentList.innerHTML = "";
-      }
-    });
-  });
-</script>
-
 </html>
