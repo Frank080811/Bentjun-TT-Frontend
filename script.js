@@ -91,58 +91,41 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     }
   });
 });
-
-// Contact form submission with professional user notification
 const contactForm = document.querySelector(".contact-form");
 
 if (contactForm) {
   contactForm.addEventListener("submit", async function (e) {
-    e.preventDefault();
+    e.preventDefault(); // prevent default browser submission
 
     const formData = new FormData(contactForm);
-    const apiBase = "https://travel-n-tour-api.onrender.com";
+    const apiBase = "https://travel-n-tour-api.onrender.com"; // your backend URL
 
     try {
-      const contactResponse = await fetch(`${apiBase}/send-contact`, {
+      const response = await fetch(`${apiBase}/send-contact`, {
         method: "POST",
-        body: formData,
+        body: formData, // send as FormData to match FastAPI Form(...)
       });
 
-      const contactResult = await contactResponse.json();
+      const result = await response.json();
 
-      // Feedback element
-      let feedbackEl = document.getElementById("responseMessage");
-      if (!feedbackEl) {
-        feedbackEl = document.createElement("div");
-        feedbackEl.id = "responseMessage";
-        feedbackEl.style.marginTop = "10px";
-        feedbackEl.style.fontWeight = "bold";
-        contactForm.appendChild(feedbackEl);
-      }
+      const feedbackEl = document.getElementById("responseMessage");
 
-      if (contactResult.status === "success") {
+      if (result.status === "success") {
         feedbackEl.innerText =
           "✅ Thank you for contacting BentJun Hub. Your message has been successfully received, and our team will reach out to you shortly.";
-        feedbackEl.style.color = "#0a7d0a"; // professional green
+        feedbackEl.style.color = "#0a7d0a";
         contactForm.reset();
       } else {
         feedbackEl.innerText =
           "❌ Oops! There was an issue submitting your message. Please try again or contact us directly via email.";
-        feedbackEl.style.color = "#d32f2f"; // professional red
+        feedbackEl.style.color = "#d32f2f";
       }
 
     } catch (error) {
-      let feedbackEl = document.getElementById("responseMessage");
-      if (!feedbackEl) {
-        feedbackEl = document.createElement("div");
-        feedbackEl.id = "responseMessage";
-        feedbackEl.style.marginTop = "10px";
-        feedbackEl.style.fontWeight = "bold";
-        contactForm.appendChild(feedbackEl);
-      }
+      const feedbackEl = document.getElementById("responseMessage");
       feedbackEl.innerText =
         "⚠️ Something went wrong while sending your message. Please try again later.";
-      feedbackEl.style.color = "#ff9800"; // professional orange
+      feedbackEl.style.color = "#ff9800";
     }
   });
 }
