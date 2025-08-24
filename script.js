@@ -91,41 +91,43 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+
 const contactForm = document.querySelector(".contact-form");
 
-if (contactForm) {
-  contactForm.addEventListener("submit", async function (e) {
-    e.preventDefault(); // prevent default browser submission
+contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData(contactForm);
-    const apiBase = "https://travel-n-tour-api.onrender.com"; // your backend URL
+  const formData = new FormData(contactForm);
+  const apiBase = "https://travel-n-tour-api.onrender.com"; // your backend URL
 
-    try {
-      const response = await fetch(`${apiBase}/send-contact`, {
-        method: "POST",
-        body: formData, // send as FormData to match FastAPI Form(...)
-      });
+  const feedbackEl = document.getElementById("responseMessage");
+  feedbackEl.innerText = "⏳ Sending message...";
+  feedbackEl.style.color = "#1976d2";
 
-      const result = await response.json();
+  try {
+    const response = await fetch(`${apiBase}/send-contact`, {
+      method: "POST",
+      body: formData
+    });
 
-      const feedbackEl = document.getElementById("responseMessage");
-
-      if (result.status === "success") {
-        feedbackEl.innerText =
-          "✅ Thank you for contacting BentJun Hub. Your message has been successfully received, and our team will reach out to you shortly.";
-        feedbackEl.style.color = "#0a7d0a";
-        contactForm.reset();
-      } else {
-        feedbackEl.innerText =
-          "❌ Oops! There was an issue submitting your message. Please try again or contact us directly via email.";
-        feedbackEl.style.color = "#d32f2f";
-      }
-
-    } catch (error) {
-      const feedbackEl = document.getElementById("responseMessage");
-      feedbackEl.innerText =
-        "⚠️ Something went wrong while sending your message. Please try again later.";
-      feedbackEl.style.color = "#ff9800";
+    if (!response.ok) {
+      throw new Error(`Server returned status ${response.status}`);
     }
-  });
-}
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      feedbackEl.innerText = "✅ Your message has been successfully received. Our team will contact you shortly.";
+      feedbackEl.style.color = "#0a7d0a";
+      contactForm.reset();
+    } else {
+      feedbackEl.innerText = "❌ " + result.message;
+      feedbackEl.style.color = "#d32f2f";
+    }
+  } catch (error) {
+    feedbackEl.innerText = "⚠️ Something went wrong while sending your message. Please try again later.";
+    feedbackEl.style.color = "#ff9800";
+    console.error(error);
+  }
+});

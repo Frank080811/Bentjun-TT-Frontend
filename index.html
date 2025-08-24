@@ -244,26 +244,26 @@
         </div>
       </div>
 
-      <!-- Contact Form -->
-      <form class="contact-form"> <!-- Removed action and method -->
-        <div class="form-group">
-          <input type="text" name="name" required>
-          <label>Your Name</label>
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" required>
-          <label>Email Address</label>
-        </div>
-        <div class="form-group">
-          <input type="text" name="phone" required>
-          <label>Phone Number</label>
-        </div>
-        <div class="form-group">
-          <textarea name="message" rows="5" required></textarea>
-          <label>Your Message</label>
-        </div>
-        <button type="submit" class="btn-submit"><span>Send Message</span></button>
-      </form>
+<form class="contact-form"> <!-- no action/method -->
+  <div class="form-group">
+    <input type="text" name="name" required>
+    <label>Your Name</label>
+  </div>
+  <div class="form-group">
+    <input type="email" name="email" required>
+    <label>Email Address</label>
+  </div>
+  <div class="form-group">
+    <input type="text" name="phone" required>
+    <label>Phone Number</label>
+  </div>
+  <div class="form-group">
+    <textarea name="message" rows="5" required></textarea>
+    <label>Your Message</label>
+  </div>
+  <button type="submit" class="btn-submit"><span>Send Message</span></button>
+</form>
+<div id="responseMessage" style="margin-top:10px; font-weight:bold;"></div>
 
       <!-- Feedback element -->
       <div id="responseMessage" style="margin-top:10px; font-weight:bold;"></div>
