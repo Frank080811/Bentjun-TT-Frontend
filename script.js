@@ -92,42 +92,57 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
   });
 });
 
-  // Contact form submission with professional user feedback
-  const contactForm = document.querySelector(".contact-form");
+// Contact form submission with professional user notification
+const contactForm = document.querySelector(".contact-form");
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
+if (contactForm) {
+  contactForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      const formData = new FormData(contactForm);
-      const apiBase = "http://localhost:8021"; // update to your backend URL
+    const formData = new FormData(contactForm);
+    const apiBase = "https://travel-n-tour-api.onrender.com";
 
-      try {
-        const contactResponse = await fetch(`${apiBase}/send-contact`, {
-          method: "POST",
-          body: formData,
-        });
+    try {
+      const contactResponse = await fetch(`${apiBase}/send-contact`, {
+        method: "POST",
+        body: formData,
+      });
 
-        const contactResult = await contactResponse.json();
+      const contactResult = await contactResponse.json();
 
-        const feedbackEl = document.getElementById("responseMessage");
-
-        if (contactResult.status === "success") {
-          feedbackEl.innerText =
-            "✅ Thank you for contacting BentJun Hub. Your message has been successfully received, and our team will reach out to you shortly.";
-          feedbackEl.style.color = "#0a7d0a"; // professional green
-          contactForm.reset();
-        } else {
-          feedbackEl.innerText =
-            "❌ Oops! There was an issue submitting your message. Please try again or contact us directly via email.";
-          feedbackEl.style.color = "#d32f2f"; // professional red
-        }
-
-      } catch (error) {
-        const feedbackEl = document.getElementById("responseMessage");
-        feedbackEl.innerText =
-          "⚠️ Something went wrong while sending your message. Please try again later.";
-        feedbackEl.style.color = "#ff9800"; // professional orange
+      // Feedback element
+      let feedbackEl = document.getElementById("responseMessage");
+      if (!feedbackEl) {
+        feedbackEl = document.createElement("div");
+        feedbackEl.id = "responseMessage";
+        feedbackEl.style.marginTop = "10px";
+        feedbackEl.style.fontWeight = "bold";
+        contactForm.appendChild(feedbackEl);
       }
-    });
-  }
+
+      if (contactResult.status === "success") {
+        feedbackEl.innerText =
+          "✅ Thank you for contacting BentJun Hub. Your message has been successfully received, and our team will reach out to you shortly.";
+        feedbackEl.style.color = "#0a7d0a"; // professional green
+        contactForm.reset();
+      } else {
+        feedbackEl.innerText =
+          "❌ Oops! There was an issue submitting your message. Please try again or contact us directly via email.";
+        feedbackEl.style.color = "#d32f2f"; // professional red
+      }
+
+    } catch (error) {
+      let feedbackEl = document.getElementById("responseMessage");
+      if (!feedbackEl) {
+        feedbackEl = document.createElement("div");
+        feedbackEl.id = "responseMessage";
+        feedbackEl.style.marginTop = "10px";
+        feedbackEl.style.fontWeight = "bold";
+        contactForm.appendChild(feedbackEl);
+      }
+      feedbackEl.innerText =
+        "⚠️ Something went wrong while sending your message. Please try again later.";
+      feedbackEl.style.color = "#ff9800"; // professional orange
+    }
+  });
+}
