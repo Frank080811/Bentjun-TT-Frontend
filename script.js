@@ -92,42 +92,52 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Contact form submission with API
-const contactForm = document.getElementById("contactForm");
+// Contact form submission with user feedback
+const contactForm = document.querySelector(".contact-form");
 
 if (contactForm) {
   contactForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", document.getElementById("name").value);
-    formData.append("email", document.getElementById("email").value);
-    formData.append("phone", document.getElementById("phone").value);
-    formData.append("message", document.getElementById("message").value);
-
+    const formData = new FormData(contactForm);
     const apiBase = "https://travel-n-tour-api.onrender.com";
 
     try {
-      // Send contact details + auto acknowledgment in one request
       const contactResponse = await fetch(`${apiBase}/send-contact`, {
         method: "POST",
-        body: formData
+        body: formData,
       });
 
       const contactResult = await contactResponse.json();
 
+      // Feedback element
+      let feedbackEl = document.getElementById("responseMessage");
+      if (!feedbackEl) {
+        feedbackEl = document.createElement("div");
+        feedbackEl.id = "responseMessage";
+        contactForm.appendChild(feedbackEl);
+      }
+
       if (contactResult.status === "success") {
-        document.getElementById("responseMessage").innerText =
-          "✅ Message sent successfully! We'll contact you soon.";
+        feedbackEl.innerText =
+          "✅ Your message has been successfully sent and received. We'll contact you soon!";
+        feedbackEl.style.color = "green";
         contactForm.reset();
       } else {
-        document.getElementById("responseMessage").innerText =
-          "❌ Error: " + contactResult.message;
+        feedbackEl.innerText = "❌ Error: " + contactResult.message;
+        feedbackEl.style.color = "red";
       }
+
     } catch (error) {
-      console.error("Error:", error);
-      document.getElementById("responseMessage").innerText =
+      let feedbackEl = document.getElementById("responseMessage");
+      if (!feedbackEl) {
+        feedbackEl = document.createElement("div");
+        feedbackEl.id = "responseMessage";
+        contactForm.appendChild(feedbackEl);
+      }
+      feedbackEl.innerText =
         "⚠️ Something went wrong. Please try again later.";
+      feedbackEl.style.color = "orange";
     }
   });
 }
