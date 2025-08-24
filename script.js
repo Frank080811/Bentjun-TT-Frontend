@@ -107,7 +107,7 @@ contactForm.addEventListener("submit", async (e) => {
   try {
     const response = await fetch(`${apiBase}/send-contact`, {
       method: "POST",
-      body: formData,
+      body: formData, // ✅ ensure POST body is sent
     });
 
     if (!response.ok) {
