@@ -92,23 +92,22 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
   });
 });
 
-
 const contactForm = document.querySelector(".contact-form");
+const feedbackEl = document.getElementById("responseMessage");
 
 contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(contactForm);
-  const apiBase = "https://travel-n-tour-api.onrender.com"; // your backend URL
+  const apiBase = "https://travel-n-tour-api.onrender.com"; // backend URL
 
-  const feedbackEl = document.getElementById("responseMessage");
   feedbackEl.innerText = "⏳ Sending message...";
   feedbackEl.style.color = "#1976d2";
 
   try {
     const response = await fetch(`${apiBase}/send-contact`, {
       method: "POST",
-      body: formData
+      body: formData,
     });
 
     if (!response.ok) {
@@ -118,7 +117,8 @@ contactForm.addEventListener("submit", async (e) => {
     const result = await response.json();
 
     if (result.status === "success") {
-      feedbackEl.innerText = "✅ Your message has been successfully received. Our team will contact you shortly.";
+      feedbackEl.innerText =
+        "✅ Your message has been successfully received. Our team will contact you shortly.";
       feedbackEl.style.color = "#0a7d0a";
       contactForm.reset();
     } else {
@@ -126,7 +126,8 @@ contactForm.addEventListener("submit", async (e) => {
       feedbackEl.style.color = "#d32f2f";
     }
   } catch (error) {
-    feedbackEl.innerText = "⚠️ Something went wrong while sending your message. Please try again later.";
+    feedbackEl.innerText =
+      "⚠️ Something went wrong while sending your message. Please try again later.";
     feedbackEl.style.color = "#ff9800";
     console.error(error);
   }
