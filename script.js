@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Elements to animate
   const elements = document.querySelectorAll(".animate-left, .animate-right");
 
-  // Intersection Observer to reveal elements on scroll
   const observer = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
@@ -30,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Repeat animation every 5 seconds
   setInterval(() => {
     elements.forEach(el => {
-      el.classList.remove("show"); // reset
-      void el.offsetWidth;         // trigger reflow
-      el.classList.add("show");    // re-apply animation
+      el.classList.remove("show");
+      void el.offsetWidth;         
+      el.classList.add("show");    
     });
   }, 5000);
 
@@ -76,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Contact form submission
+  // ----------------------------
+  // CONTACT FORM SUBMISSION
+  // ----------------------------
   if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -107,6 +108,98 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackEl.innerText = "⚠️ Something went wrong while sending your message. Please try again later.";
         feedbackEl.style.color = "#ff9800";
         console.error("❌ Contact form error:", error);
+      }
+    });
+  }
+
+  // ----------------------------
+  // VISA FORM MULTI-STEP LOGIC
+  // ----------------------------
+  const visaForm = document.getElementById("visaForm");
+  if (visaForm) {
+    const steps = visaForm.querySelectorAll(".form-step");
+    const nextBtns = visaForm.querySelectorAll(".next-btn");
+    const prevBtns = visaForm.querySelectorAll(".prev-btn");
+    const progress = document.getElementById("progress");
+    const stepCircles = visaForm.querySelectorAll(".step");
+
+    let currentStep = 0;
+
+    function updateForm() {
+      steps.forEach((step, index) => {
+        step.classList.toggle("active", index === currentStep);
+      });
+
+      stepCircles.forEach((circle, index) => {
+        circle.classList.toggle("active", index === currentStep);
+        circle.classList.toggle("completed", index < currentStep);
+      });
+
+      progress.style.width = (currentStep / (steps.length - 1)) * 100 + "%";
+    }
+
+    nextBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          updateForm();
+        }
+      });
+    });
+
+    prevBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (currentStep > 0) {
+          currentStep--;
+          updateForm();
+        }
+      });
+    });
+
+    updateForm();
+
+    // ----------------------------
+    // VISA FORM SUBMISSION
+    // ----------------------------
+    visaForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(visaForm);
+
+      const visaFeedbackEl = document.getElementById("visaResponseMessage");
+      if (visaFeedbackEl) {
+        visaFeedbackEl.innerText = "⏳ Submitting your application...";
+        visaFeedbackEl.style.color = "#1976d2";
+      }
+
+      try {
+        const response = await fetch(`${apiBase}/submit-application`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error(`Server returned status ${response.status}`);
+
+        const result = await response.json();
+        console.log("📨 VISA API Response:", result);
+
+        if (visaFeedbackEl) {
+          if (result.status === "success") {
+            visaFeedbackEl.innerText = "✅ Application submitted successfully! You will receive an acknowledgment email.";
+            visaFeedbackEl.style.color = "#0a7d0a";
+            visaForm.reset();
+            currentStep = 0;
+            updateForm();
+          } else {
+            visaFeedbackEl.innerText = "❌ " + result.message;
+            visaFeedbackEl.style.color = "#d32f2f";
+          }
+        }
+      } catch (error) {
+        if (visaFeedbackEl) {
+          visaFeedbackEl.innerText = "⚠️ Something went wrong while submitting your application. Please try again.";
+          visaFeedbackEl.style.color = "#ff9800";
+        }
+        console.error("❌ VISA form error:", error);
       }
     });
   }
