@@ -246,7 +246,7 @@
       </div>
 
       <!-- Contact Form -->
-	  <form class="contact-form" action="https://travel-n-tour-api.onrender.com/send-contact" method="post">
+      <form class="contact-form">
         <div class="form-group">
           <input type="text" name="name" required>
           <label>Your Name</label>
@@ -259,12 +259,15 @@
           <input type="text" name="phone" required>
           <label>Phone Number</label>
         </div> 
-       <div class="form-group">
+        <div class="form-group">
           <textarea name="message" rows="5" required></textarea>
           <label>Your Message</label>
         </div>
         <button type="submit" class="btn-submit"><span>Send Message</span></button>
       </form>
+
+      <!-- Feedback message -->
+      <div id="responseMessage" style="margin-top:10px; font-weight:bold;"></div>
     </div>
   </div>
 </section>
