@@ -100,11 +100,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ----------------------------
-  // Contact Form Submission
-  // ----------------------------
+ // ----------------------------
 // Contact Form Submission
-if (contactForm) {
+// ----------------------------
+const contactForm = document.getElementById("contactForm");
+const feedbackEl = document.getElementById("feedback");
+
+if (contactForm && feedbackEl) {
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(contactForm);
@@ -136,7 +138,6 @@ if (contactForm) {
     }
   });
 }
-
   // ----------------------------
   // Visa Form Multi-Step
   // ----------------------------
