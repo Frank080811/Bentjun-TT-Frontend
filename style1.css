@@ -146,7 +146,7 @@ html {
 
 .search-box select,
 .search-box input {
-  flex: 1 1 100%;
+  flex: 1 1 150px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -164,6 +164,7 @@ html {
 .btn-search:hover {
   background: #002244;
 }
+
 
 /* Visa Application Section */
 #visa-application {
