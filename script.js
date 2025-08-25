@@ -1,7 +1,5 @@
+
 document.addEventListener("DOMContentLoaded", () => {
-  const contactForm = document.querySelector(".contact-form");
-  const feedbackEl = document.getElementById("responseMessage");
-  const visaForm = document.getElementById("visaForm");
   const apiBase = "https://travel-n-tour-api.onrender.com";
 
   // ----------------------------
@@ -100,47 +98,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
- // ----------------------------
-// Contact Form Submission
-// ----------------------------
-const contactForm = document.getElementById("contactForm");
-const feedbackEl = document.getElementById("feedback");
+  // ----------------------------
+  // Contact Form Submission
+  // ----------------------------
+  const contactForm = document.getElementById("contactForm");
+  const feedbackEl = document.getElementById("feedback");
 
-if (contactForm && feedbackEl) {
-  contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(contactForm);
+  if (contactForm && feedbackEl) {
+    contactForm.setAttribute("action", "javascript:void(0)"); // prevent fallback GET
 
-    feedbackEl.innerText = "⏳ Sending message...";
-    feedbackEl.style.color = "#1976d2";
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault(); // stop default redirect
+      const formData = new FormData(contactForm);
 
-    try {
-      const response = await fetch(`${apiBase}/send-contact`, {
-        method: "POST",
-        body: formData,
-      });
+      feedbackEl.innerText = "⏳ Sending message...";
+      feedbackEl.style.color = "#1976d2";
 
-      if (!response.ok) throw new Error(`Server returned ${response.status}`);
-      const result = await response.json();
+      try {
+        const response = await fetch(`${apiBase}/send-contact`, {
+          method: "POST",
+          body: formData, // keep FormData (multipart/form-data)
+        });
 
-      if (result.status === "success") {
-        feedbackEl.innerText = "✅ Message sent successfully!";
-        feedbackEl.style.color = "#0a7d0a";
-        contactForm.reset();
-      } else {
-        feedbackEl.innerText = "❌ " + result.message;
-        feedbackEl.style.color = "#d32f2f";
+        if (!response.ok) throw new Error(`Server returned ${response.status}`);
+        const result = await response.json();
+
+        if (result.status === "success") {
+          feedbackEl.innerText = "✅ Message sent successfully!";
+          feedbackEl.style.color = "#0a7d0a";
+          contactForm.reset();
+        } else {
+          feedbackEl.innerText = "❌ " + result.message;
+          feedbackEl.style.color = "#d32f2f";
+        }
+      } catch (err) {
+        feedbackEl.innerText = "⚠️ Something went wrong. Try again later.";
+        feedbackEl.style.color = "#ff9800";
+        console.error("Contact form error:", err);
       }
-    } catch (err) {
-      feedbackEl.innerText = "⚠️ Something went wrong. Try again later.";
-      feedbackEl.style.color = "#ff9800";
-      console.error(err);
-    }
-  });
-}
+    });
+  }
+
   // ----------------------------
   // Visa Form Multi-Step
   // ----------------------------
+  const visaForm = document.getElementById("visaForm");
   if (visaForm) {
     const steps = visaForm.querySelectorAll(".form-step");
     const nextBtns = visaForm.querySelectorAll(".next-btn");
@@ -207,3 +209,4 @@ if (contactForm && feedbackEl) {
     });
   }
 });
+
