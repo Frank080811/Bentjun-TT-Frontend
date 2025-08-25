@@ -9,8 +9,12 @@
 body {
   color: #333;
   line-height: 1.6;
-  width: 100%;
+  background: #f5f5f5;
   overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* Navbar */
@@ -22,16 +26,13 @@ body {
   padding: 15px 5%;
   background: #003366;
   color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.top-nav .logo {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.logo img {
-  width: 60px;   
-  height: auto;  
+.top-nav .logo img {
+  width: 60px;
 }
 
 .nav-links {
@@ -64,7 +65,7 @@ body {
   color: #ffcc00;
 }
 
-/* Hero */
+/* Hero Section */
 .hero {
   position: relative;
   height: 80vh;
@@ -80,7 +81,8 @@ body {
 
 .hero-video {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -89,7 +91,8 @@ body {
 
 .hero .overlay {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.5);
@@ -100,25 +103,37 @@ body {
   position: relative;
   z-index: 2;
   max-width: 100%;
+  padding: 20px;
 }
 
 .hero-content h1 {
   font-size: 2rem;
+  margin-bottom: 10px;
 }
 
 .hero-content span {
   color: #ffcc00;
 }
 
+.hero-content p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
 .btn-primary {
   display: inline-block;
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 10px 20px;
   background: #ffcc00;
   color: #003366;
   font-weight: bold;
   border-radius: 5px;
   text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #e6b800;
 }
 
 /* Search Box */
@@ -130,13 +145,12 @@ body {
   background: #fff;
   padding: 10px;
   border-radius: 8px;
-  width: 100%;
-  max-width: 500px;
+  justify-content: center;
 }
 
 .search-box select,
 .search-box input {
-  flex: 1 1 100%;
+  flex: 1 1 150px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -155,61 +169,303 @@ body {
   background: #002244;
 }
 
-/* Sections - Activities, About, Features, Promo, Contact, Footer */
-.activities, .about, .enquiry, .promo, .promo-offers, .team, .contact, .site-footer {
-  padding: 40px 5%;
-  width: 100%;
+/* Activities Section */
+.activities {
+  padding: 60px 5%;
+  text-align: center;
+  background: #f5f5f5;
 }
 
-.activity-cards, .about, .features, .team-members, .contact-content, .promo-cards-wrapper {
+.activities h2 {
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+}
+
+.activity-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.activity-cards .card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity-cards .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.activity-cards .card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.activity-cards .card h3 {
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+/* About Section */
+.about {
+  display: flex;
   flex-wrap: wrap;
+  gap: 40px;
+  padding: 60px 5%;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-img {
+  position: relative;
+  flex: 1 1 300px;
+}
+
+.about-img img {
   width: 100%;
+  border-radius: 10px;
 }
 
-.card, .team-member, .promo-card, .contact-form, .visa-form {
+.experience {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: #ffcc00;
+  color: #003366;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.about-text {
+  flex: 1 1 400px;
+}
+
+.about-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.about-text p {
+  margin-bottom: 15px;
+}
+
+.features {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.features li {
+  flex: 1 1 150px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Promo Section */
+.promo-offers {
+  padding: 60px 5%;
+  background: #e9f2f8;
+  text-align: center;
+}
+
+.promo-title {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+}
+
+.promo-cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.promo-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.promo-card h3 {
+  margin-bottom: 10px;
+}
+
+.promo-item {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+/* Contact Section */
+.contact {
+  padding: 60px 5%;
+  background: #f5f5f5;
+}
+
+.contact .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+}
+
+.contact-info {
+  flex: 1 1 250px;
+}
+
+.contact-info .info-item {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-form {
+  flex: 1 1 350px;
+}
+
+.contact-form .form-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
   width: 100%;
-  max-width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-/* Responsive Typography */
-.hero-content h1, .promo-message, .promo-title, .about-title, .team .section-title, .enquiry .section-title, .contact .section-title {
-  font-size: calc(1.5rem + 1vw);
+.contact-form label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  background: #f5f5f5;
+  padding: 0 4px;
+  font-size: 0.8rem;
 }
 
-/* Forms */
-.visa-form, .contact-form, .enquiry-form {
+/* Team Section */
+.team {
+  padding: 60px 5%;
+  text-align: center;
+}
+
+.team-members {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.team-member img {
   width: 100%;
-  max-width: 500px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-/* Buttons */
-.btn-submit, .next-btn, .prev-btn, .btn-primary {
-  width: 100%;
-  max-width: 300px;
+.team-member h3 {
+  margin-bottom: 5px;
 }
 
-/* Responsive Media Queries */
-@media (max-width: 1024px) {
-  .top-nav { padding: 15px 3%; }
-  .hero-content h1 { font-size: 1.8rem; }
-  .about { flex-direction: column; gap: 25px; }
-  .features li { font-size: 16px; }
+/* Footer */
+.site-footer {
+  background: #003366;
+  color: #fff;
+  padding: 40px 5%;
+  font-size: 0.95rem;
 }
 
-@media (max-width: 768px) {
-  .nav-links { justify-content: center; margin-top: 10px; }
-  .social-icons { justify-content: center; margin-top: 10px; }
-  .hero { height: 70vh; padding: 0 3%; }
-  .activity-cards { grid-template-columns: 1fr; }
-  .about-img, .about-text { flex: 1 1 100%; }
-  .team-members { flex-direction: column; gap: 20px; }
-  .promo-cards-wrapper { flex-direction: column; animation: none; }
-  .visa-form, .contact-form { padding: 20px; }
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.footer-about, .footer-links, .footer-contact, .footer-social {
+  flex: 1 1 200px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 6px;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #ffcc00;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .top-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .about {
+    flex-direction: column;
+  }
+
+  .features {
+    flex-direction: column;
+  }
+
+  .contact .container {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 480px) {
-  .hero-content h1 { font-size: 1.5rem; }
-  .btn-primary, .btn-submit, .next-btn, .prev-btn { font-size: 0.9rem; padding: 10px 16px; }
-  .features li { font-size: 14px; }
-  .about-desc, .team-member p { font-size: 14px; line-height: 1.6; }
+  .hero {
+    height: 60vh;
+  }
+
+  .hero-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .btn-primary, .btn-search {
+    width: 100%;
+  }
 }

@@ -182,13 +182,14 @@ html {
   animation: fadeInDown 1s ease;
 }
 
+/* Visa Form */
 .visa-form {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   padding: 25px;
   border-radius: 15px;
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   margin: auto;
   color: #fff;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
@@ -300,6 +301,7 @@ html {
   font-size: 14px;
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease;
+  margin-top: 10px;
 }
 
 .next-btn:hover,
@@ -318,6 +320,7 @@ html {
   border: none;
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease;
+  margin-top: 15px;
 }
 
 .btn-submit:hover {
