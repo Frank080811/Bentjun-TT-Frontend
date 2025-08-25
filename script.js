@@ -103,35 +103,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------
   // Contact Form Submission
   // ----------------------------
-  if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(contactForm);
-      feedbackEl.innerText = "⏳ Sending message...";
-      feedbackEl.style.color = "#1976d2";
+// Contact Form Submission
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
 
-      try {
-        const response = await fetch(`${apiBase}/send-contact`, {
-          method: "POST",
-          body: formData,
-        });
-        if (!response.ok) throw new Error(`Server returned ${response.status}`);
-        const result = await response.json();
-        if (result.status === "success") {
-          feedbackEl.innerText = "✅ Message sent successfully!";
-          feedbackEl.style.color = "#0a7d0a";
-          contactForm.reset();
-        } else {
-          feedbackEl.innerText = "❌ " + result.message;
-          feedbackEl.style.color = "#d32f2f";
-        }
-      } catch (err) {
-        feedbackEl.innerText = "⚠️ Something went wrong. Try again later.";
-        feedbackEl.style.color = "#ff9800";
-        console.error(err);
+    feedbackEl.innerText = "⏳ Sending message...";
+    feedbackEl.style.color = "#1976d2";
+
+    try {
+      const response = await fetch(`${apiBase}/send-contact`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+      const result = await response.json();
+
+      if (result.status === "success") {
+        feedbackEl.innerText = "✅ Message sent successfully!";
+        feedbackEl.style.color = "#0a7d0a";
+        contactForm.reset();
+      } else {
+        feedbackEl.innerText = "❌ " + result.message;
+        feedbackEl.style.color = "#d32f2f";
       }
-    });
-  }
+    } catch (err) {
+      feedbackEl.innerText = "⚠️ Something went wrong. Try again later.";
+      feedbackEl.style.color = "#ff9800";
+      console.error(err);
+    }
+  });
+}
 
   // ----------------------------
   // Visa Form Multi-Step

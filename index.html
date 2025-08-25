@@ -149,52 +149,56 @@
   </div>
 </section> -->
 
-<!-- Profile Section -->
-
-<!-- Promo Section with Offers -->
+<!-- Promo Section with Advanced Packages -->
 <section class="promo-offers" id="promo-offers">
-  <h2 class="promo-title">Europe Job Offers</h2>
+  <h2 class="promo-title animated-title">Europe Job & Study Packages</h2>
   <div class="promo-cards-wrapper">
-    <!-- Card 1: Farm Workers -->
+
+    <!-- Card 1 -->
     <div class="promo-card">
-      <h3>Farm Workers Needed Urgently</h3>
+      <div class="promo-icon"><i class="fas fa-tractor"></i></div>
+      <h3>Farm Workers Needed</h3>
+      <p class="promo-desc">Urgent hiring for seasonal farm workers across Europe. Great salaries & accommodation included.</p>
       <div class="promo-item"><i class="fas fa-money-bill-wave"></i> <span>Salary: 10,000 - 12,000 GHS/month</span></div>
-      <div class="promo-item"><i class="fas fa-bed"></i> <span>Accommodation: Provided by company</span></div>
-      <div class="promo-item"><i class="fas fa-hand-holding-dollar"></i> <span>Process to start: 4,000 GHS</span></div>
-      <div class="promo-item"><i class="fas fa-passport"></i> <span>Pay Only After Your Visa Is Approved: 28,000 GHS</span></div>
+      <div class="promo-item"><i class="fas fa-bed"></i> <span>Accommodation: Provided</span></div>
+      <div class="promo-item"><i class="fas fa-passport"></i> <span>Pay Only After Visa Approval</span></div>
+      <a href="#" class="btn-promo">Apply Now</a>
     </div>
 
-    <!-- Card 2: Mason/Construction/Welders -->
+    <!-- Card 2 -->
     <div class="promo-card">
-      <h3>Masons, Construction Workers & Welders</h3>
+      <div class="promo-icon"><i class="fas fa-hammer"></i></div>
+      <h3>Masons & Construction Workers</h3>
+      <p class="promo-desc">Join top European construction projects with competitive salary and skills verification.</p>
       <div class="promo-item"><i class="fas fa-money-bill-wave"></i> <span>Salary: 12,000 - 15,000 GHS/month</span></div>
       <div class="promo-item"><i class="fas fa-bed"></i> <span>Accommodation: Provided</span></div>
-      <div class="promo-item"><i class="fas fa-hand-holding-dollar"></i> <span>Processing: 5,500 GHS</span></div>
       <div class="promo-item"><i class="fas fa-video"></i> <span>Requirement: 2-min video proof of skills</span></div>
-      <div class="promo-item"><i class="fas fa-passport"></i> <span>Pay Only After Your Visa Is Approved: 30,000 GHS</span></div>
+      <a href="#" class="btn-promo">Apply Now</a>
     </div>
 
-    <!-- Card 3: School Processing & Scholarship -->
+    <!-- Card 3 -->
     <div class="promo-card">
+      <div class="promo-icon"><i class="fas fa-graduation-cap"></i></div>
       <h3>School Processing & Scholarship</h3>
+      <p class="promo-desc">Enroll in European schools with scholarships and full visa processing support.</p>
       <div class="promo-item"><i class="fas fa-hand-holding-dollar"></i> <span>Processing Fee: 2,000 GHS</span></div>
-      <div class="promo-item"><i class="fas fa-graduation-cap"></i> <span>Partial Scholarship: 8,000 EUR</span></div>
-      <div class="promo-item"><i class="fas fa-hand-holding-dollar"></i> <span>Initial Deposit: 2,000 EUR</span></div>
-      <div class="promo-item"><i class="fas fa-file-alt"></i> <span>Documents Needed: Passport, Certificate, Transcript, English Proficiency, CV</span></div>
       <div class="promo-item"><i class="fas fa-university"></i> <span>Blocked Account: 4,200 EUR</span></div>
+      <a href="#" class="btn-promo">Apply Now</a>
     </div>
+
   </div>
 </section>
+
 
 
 <!-- Contact Section -->
 <section class="contact" id="contact">
   <div class="container">
-    <h2 class="section-title">Get in Touch</h2>
+    <h2 class="section-title animated-title">Get in Touch</h2>
     <p class="section-subtitle">Have questions or want to plan your next trip? Reach out to us!</p>
 
     <div class="contact-content">
-      <!-- Contact Info -->
+      <!-- Contact Details Column -->
       <div class="contact-info">
         <div class="info-item">
           <i class="fas fa-map-marker-alt"></i>
@@ -210,29 +214,44 @@
         </div>
       </div>
 
-      <!-- Contact Form -->
-      <form class="contact-form">
-        <div class="form-group">
-          <input type="text" name="name" required />
-          <label>Your Name</label>
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" required />
-          <label>Email Address</label>
-        </div>
-        <div class="form-group">
-          <input type="text" name="phone" required />
-          <label>Phone Number</label>
-        </div>
-        <div class="form-group">
-          <textarea name="message" rows="5" required></textarea>
-          <label>Your Message</label>
-        </div>
-        <button type="submit" class="btn-submit"><span>Send Message</span></button>
-      </form>
+      <!-- Contact Form Column -->
+<!-- Contact Form Column -->
+<form class="contact-form">
+  <div class="form-group">
+    <input type="text" name="name" required />
+    <label>Your Name</label>
+  </div>
+  <div class="form-group">
+    <input type="email" name="email" required />
+    <label>Email Address</label>
+  </div>
+  <div class="form-group">
+    <input type="text" name="phone" required />
+    <label>Phone Number</label>
+  </div>
 
-      <!-- Feedback element (only one!) -->
-      <div id="responseMessage" style="margin-top:10px; font-weight:bold;"></div>
+  <!-- Selection Dropdown -->
+  <div class="form-group">
+    <select name="inquiry" required>
+      <option value="" disabled selected>Select your inquiry</option>
+      <option value="visa">Visa Application</option>
+      <option value="packages">Travel Packages</option>
+      <option value="payment">Payment & Billing</option>
+      <option value="support">Student & Work Visa </option>
+      <option value="other">Other</option>
+    </select>
+    <label>Reason for Contact</label>
+  </div>
+
+  <!-- Textarea for custom message -->
+  <div class="form-group">
+    <textarea name="message" rows="5" required></textarea>
+    <label>Your Message</label>
+  </div>
+
+  <button type="submit" class="btn-submit"><span>Send Message</span></button>
+</form>
+
     </div>
   </div>
 </section>
