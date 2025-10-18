@@ -1,6 +1,98 @@
+// =============================
+// Multi-step logic for Course Registration
+// =============================
+const courseForm = document.getElementById('courseForm');
+if (courseForm) {
+  const courseSteps = courseForm.querySelectorAll('.form-step');
+  const nextBtns = courseForm.querySelectorAll('.next-btn');
+  const prevBtns = courseForm.querySelectorAll('.prev-btn');
+  const courseProgress = document.getElementById('courseProgress');
+  const courseCircles = document.querySelectorAll('.course-progress-bar .step');
+  const courseResponseEl = document.getElementById('courseResponseMessage');
 
+  let courseStepIndex = 0;
+
+  function updateCourseForm() {
+    courseSteps.forEach((step, index) => {
+      step.classList.toggle('active', index === courseStepIndex);
+    });
+
+    if (courseCircles.length && courseProgress) {
+      courseCircles.forEach((circle, index) => {
+        circle.classList.toggle('active', index === courseStepIndex);
+        circle.classList.toggle('completed', index < courseStepIndex);
+      });
+      courseProgress.style.width = `${(courseStepIndex / (courseSteps.length - 1)) * 100}%`;
+    }
+  }
+
+  nextBtns.forEach(btn =>
+    btn.addEventListener('click', () => {
+      if (courseStepIndex < courseSteps.length - 1) {
+        courseStepIndex++;
+        updateCourseForm();
+      }
+    })
+  );
+
+  prevBtns.forEach(btn =>
+    btn.addEventListener('click', () => {
+      if (courseStepIndex > 0) {
+        courseStepIndex--;
+        updateCourseForm();
+      }
+    })
+  );
+
+  updateCourseForm();
+
+  // ----------------------------
+  // Course Form Submission
+  // ----------------------------
+  courseForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(courseForm);
+
+    if (courseResponseEl) {
+      courseResponseEl.innerText = "⏳ Submitting your course registration...";
+      courseResponseEl.style.color = "#1976d2";
+    }
+
+    try {
+      const response = await fetch("https://bentjun-tt-backend.onrender.com/course-registration", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+      const result = await response.json();
+
+      if (result.status === "success") {
+        courseResponseEl.innerText = "✅ Registration submitted successfully! We’ll contact you soon.";
+        courseResponseEl.style.color = "#0a7d0a";
+        courseForm.reset();
+        courseStepIndex = 0;
+        updateCourseForm();
+      } else {
+        courseResponseEl.innerText = "❌ " + (result.message || "Submission failed");
+        courseResponseEl.style.color = "#d32f2f";
+      }
+    } catch (err) {
+      courseResponseEl.innerText = "⚠️ Something went wrong. Try again later.";
+      courseResponseEl.style.color = "#ff9800";
+      console.error("Course form error:", err);
+    }
+  });
+}
+
+
+
+// =============================
+// Main Script for Site
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
-  const apiBase = "https://travel-n-tour-api.onrender.com";
+  const apiBase = "https://bentjun-tt-backend.onrender.com";
 
   // ----------------------------
   // Hero Video Autoplay
@@ -13,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     heroVideo.loop = true;
     const playPromise = heroVideo.play();
     if (playPromise !== undefined) {
-      playPromise.catch(error => {
+      playPromise.catch(() => {
         console.warn("Autoplay blocked, waiting for user interaction.");
       });
     }
@@ -69,17 +161,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------
   // Promo Cards Scroll
   // ----------------------------
-  const wrapper = document.querySelector(".promo-cards-wrapper");
-  if (wrapper) {
-    const cards = wrapper.innerHTML;
-    wrapper.innerHTML += cards;
-    let scrollAmount = 0;
-    setInterval(() => {
-      scrollAmount += 310;
-      if (scrollAmount >= wrapper.scrollWidth / 2) scrollAmount = 0;
-      wrapper.scrollTo({ left: scrollAmount, behavior: "smooth" });
-    }, 5000);
-  }
+const wrapper = document.querySelector(".promo-cards-wrapper");
+if (wrapper) {
+  const scrollStep = 310; // Adjust for your card width + margin
+  let scrollAmount = 0;
+
+  setInterval(() => {
+    scrollAmount += scrollStep;
+    // Smooth scroll within existing cards only
+    if (scrollAmount >= wrapper.scrollWidth - wrapper.clientWidth) {
+      scrollAmount = 0; // Reset to start
+    }
+    wrapper.scrollTo({ left: scrollAmount, behavior: "smooth" });
+  }, 5000);
+}
 
   // ----------------------------
   // Smooth Scroll Navigation
@@ -105,10 +200,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("feedback");
 
   if (contactForm && feedbackEl) {
-    contactForm.setAttribute("action", "javascript:void(0)"); // prevent fallback GET
+    contactForm.setAttribute("action", "javascript:void(0)");
 
     contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault(); // stop default redirect
+      e.preventDefault();
       const formData = new FormData(contactForm);
 
       feedbackEl.innerText = "⏳ Sending message...";
@@ -117,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const response = await fetch(`${apiBase}/send-contact`, {
           method: "POST",
-          body: formData, // keep FormData (multipart/form-data)
+          body: formData,
         });
 
         if (!response.ok) throw new Error(`Server returned ${response.status}`);
@@ -148,25 +243,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtns = visaForm.querySelectorAll(".next-btn");
     const prevBtns = visaForm.querySelectorAll(".prev-btn");
     const progress = document.getElementById("progress");
-    const stepCircles = visaForm.querySelectorAll(".step");
+    const stepCircles = document.querySelectorAll(".progress-bar .step");
+    const visaFeedbackEl = document.getElementById("visaResponseMessage");
     let currentStep = 0;
 
     function updateForm() {
-      steps.forEach((step, index) => step.classList.toggle("active", index === currentStep));
+      steps.forEach((step, index) => {
+        step.classList.toggle("active", index === currentStep);
+      });
+
       stepCircles.forEach((circle, index) => {
         circle.classList.toggle("active", index === currentStep);
         circle.classList.toggle("completed", index < currentStep);
       });
-      progress.style.width = (currentStep / (steps.length - 1)) * 100 + "%";
+
+      progress.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
     }
 
-    nextBtns.forEach(btn => btn.addEventListener("click", () => {
-      if (currentStep < steps.length - 1) { currentStep++; updateForm(); }
-    }));
+    nextBtns.forEach(btn =>
+      btn.addEventListener("click", () => {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          updateForm();
+        }
+      })
+    );
 
-    prevBtns.forEach(btn => btn.addEventListener("click", () => {
-      if (currentStep > 0) { currentStep--; updateForm(); }
-    }));
+    prevBtns.forEach(btn =>
+      btn.addEventListener("click", () => {
+        if (currentStep > 0) {
+          currentStep--;
+          updateForm();
+        }
+      })
+    );
 
     updateForm();
 
@@ -175,8 +285,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------
     visaForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const formData = new FormData(visaForm);
-      const visaFeedbackEl = document.getElementById("visaResponseMessage");
 
       if (visaFeedbackEl) {
         visaFeedbackEl.innerText = "⏳ Submitting your application...";
@@ -184,29 +294,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const response = await fetch(`${apiBase}/send-application`, { method: "POST", body: formData });
+        const response = await fetch(`${apiBase}/send-application`, {
+          method: "POST",
+          body: formData,
+        });
+
         if (!response.ok) throw new Error(`Server returned ${response.status}`);
         const result = await response.json();
-        if (visaFeedbackEl) {
-          if (result.status === "success") {
-            visaFeedbackEl.innerText = "✅ Application submitted successfully!";
-            visaFeedbackEl.style.color = "#0a7d0a";
-            visaForm.reset();
-            currentStep = 0;
-            updateForm();
-          } else {
-            visaFeedbackEl.innerText = "❌ " + result.message;
-            visaFeedbackEl.style.color = "#d32f2f";
-          }
+
+        if (result.status === "success") {
+          visaFeedbackEl.innerText = "✅ Application submitted successfully!";
+          visaFeedbackEl.style.color = "#0a7d0a";
+          visaForm.reset();
+          currentStep = 0;
+          updateForm();
+        } else {
+          visaFeedbackEl.innerText = "❌ " + (result.message || "Submission failed");
+          visaFeedbackEl.style.color = "#d32f2f";
         }
       } catch (err) {
-        if (visaFeedbackEl) {
-          visaFeedbackEl.innerText = "⚠️ Something went wrong. Try again.";
-          visaFeedbackEl.style.color = "#ff9800";
-        }
-        console.error(err);
+        visaFeedbackEl.innerText = "⚠️ Something went wrong. Try again.";
+        visaFeedbackEl.style.color = "#ff9800";
+        console.error("Visa form error:", err);
       }
     });
   }
 });
-

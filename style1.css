@@ -226,6 +226,26 @@ html {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
+/* Fix dropdown background and text color for Visa Application selects */
+#visa-application select {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 1px solid #1e90ff;
+}
+
+/* Ensure dropdown options also appear with dark background */
+#visa-application select option {
+  background-color: #000;
+  color: #fff;
+}
+
+#visa-application select:focus {
+  background-color: #111;
+  border: 1px solid #00bfff;
+  box-shadow: 0 0 8px #00bfff;
+}
+
+
 .visa-form input:focus,
 .visa-form select:focus {
   background: rgba(255,255,255,0.25);
@@ -443,4 +463,61 @@ html {
   .hero-content h1 { font-size: 1.4rem; }
   .visa-form input, .visa-form select, .visa-form input[type="file"] { font-size: 14px; }
   .btn-primary, .btn-submit { font-size: 0.9rem; padding: 10px 16px; }
+}
+
+#course-registration {
+  padding: 60px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+#course-registration h2 {
+  color: #004aad;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.section-intro {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.course-form {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.course-form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.course-form input,
+.course-form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.course-form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #004aad;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.course-form button:hover {
+  background: #0066cc;
 }
